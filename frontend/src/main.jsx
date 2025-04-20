@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { ActivityPage, Callback, ErrorPage, IndexPage, LandingPage, LoginPage, RegisterPage, RepositoriesPage } from "./pages/index.js";
+import { ActivityPage, CallbackPage, ErrorPage, IndexPage, LandingPage, LoginPage, RegisterPage, RepositoriesPage } from "./pages/index.js";
 import App from "./App.jsx";
 
 import { Provider } from "react-redux";
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
       { path: "/register", element: <RegisterPage /> },
       { path: "/repositories", element: <RepositoriesPage /> },
       { path: "/activity", element: <ActivityPage /> },
-      { path: "/callback", element: <Callback />}
+      { path: "/callback", element: <CallbackPage />}
     ],
   },
 ]);

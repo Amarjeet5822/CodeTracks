@@ -5,7 +5,7 @@ import ActivityPage from "./ActivityPage";
 import IndexPage from "./IndexPage";
 import ErrorPage from "./ErrorPage";
 import LandingPage from "./LandingPage";
-import Callback from "./CallBack";
+import CallbackPage from "./CallBackPage";
 
 export {
   LoginPage,
@@ -15,5 +15,5 @@ export {
   IndexPage,
   ErrorPage,
   LandingPage,
-  Callback
+  CallbackPage
 }

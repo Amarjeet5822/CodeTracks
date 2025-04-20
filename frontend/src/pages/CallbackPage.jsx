@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { setGitHubIsAuthenticated } from '../RTK/features/authSlice';
 
-const Callback = () => {
+const CallbackPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -32,4 +32,4 @@ const Callback = () => {
   );
 };
 
-export default Callback;
+export default CallbackPage;
