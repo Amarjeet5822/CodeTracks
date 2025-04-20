@@ -4,6 +4,8 @@ import RepositoriesPage from "./RepositoriesPage";
 import ActivityPage from "./ActivityPage";
 import IndexPage from "./IndexPage";
 import ErrorPage from "./ErrorPage";
+import LandingPage from "./LandingPage";
+import Callback from "./CallBack";
 
 export {
   LoginPage,
@@ -11,5 +13,7 @@ export {
   RepositoriesPage,
   ActivityPage,
   IndexPage,
-  ErrorPage
+  ErrorPage,
+  LandingPage,
+  Callback
 }

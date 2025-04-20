@@ -1,9 +1,9 @@
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { api } from "../store/links";
+import { BE_URL } from "../store/links";
 
-console.log("api backend", api); // check the api link
+console.log("api backend", BE_URL); // check the api link
 // First, create the thunk ( Login User)
 export const loginUser = createAsyncThunk(
   "authUser/loginUser",
@@ -11,7 +11,7 @@ export const loginUser = createAsyncThunk(
     console.log("email-password", email, password); // check the email and password
     try {
       const response = await axios.post(
-        `${api}/api/auth/login`,
+        `${BE_URL}/api/auth/login`,
         { password, email },
         { withCredentials: true }
       );
@@ -27,7 +27,7 @@ export const registerUser = createAsyncThunk(
   async ({ email, password, name }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${api}/api/auth/signup`,
+        `${BE_URL}/api/auth/signup`,
         { password, email, name },
         {
           withCredentials: true,
@@ -46,7 +46,7 @@ export const logoutUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${api}/logout`,
+        `${BE_URL}/logout`,
         {},
         { withCredentials: true }
       );
@@ -62,7 +62,7 @@ export const getUserStatus = createAsyncThunk(
   "authUser/getUserStatus",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${api}/api/auth/status`, {
+      const response = await axios.get(`${BE_URL}/api/auth/status`, {
         withCredentials: true,
       });
       return response.data;
@@ -75,7 +75,6 @@ export const getUserStatus = createAsyncThunk(
 );
 const initialState = {
   isAuthenticated: false,
-  userDetail: null,
   loading: false,
   error: null,
   message: null,
@@ -86,7 +85,7 @@ const authUserSlice = createSlice({
   name: "authUser",
   initialState,
   reducers: {
-    setGoogleIsAuthenticated: (state) => {
+    setGitHubIsAuthenticated: (state) => {
       state.isAuthenticated = true;
     },
   },
@@ -110,7 +109,6 @@ const authUserSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isAuthenticated = true;
         state.loading = false;
-        state.userDetail = action.payload?.user;
         state.message = action.payload?.message;
       })
       .addCase(loginUser.rejected, handleRejected);
@@ -122,7 +120,6 @@ const authUserSlice = createSlice({
         state.loading = false;
         state.message = action.payload?.message;
         state.isAuthenticated = action.payload?.isAuthenticated;
-        state.userDetail = null;
       })
       .addCase(logoutUser.rejected, handleRejected);
 
@@ -132,7 +129,6 @@ const authUserSlice = createSlice({
       .addCase(getUserStatus.fulfilled, (state, action) => {
         state.loading = false;
         state.isAuthenticated = action.payload?.isAuthenticated;
-        state.userDetail = action.payload?.user;
         state.message = action.payload?.message;
       })
       .addCase(getUserStatus.rejected, handleRejected);
@@ -148,5 +144,5 @@ const authUserSlice = createSlice({
       .addCase(registerUser.rejected, handleRejected);
   },
 });
-export const { setGoogleIsAuthenticated } = authUserSlice.actions;
+export const { setGitHubIsAuthenticated } = authUserSlice.actions;
 export default authUserSlice.reducer;
