@@ -9,7 +9,6 @@ const getGitHubUserData = async (accessToken) => {
       Authorization: `Bearer ${accessToken}`,
       Accept: "application/vnd.github+json",
     };
-
     // 1. Get user profile
     const { data: profile } = await axios.get(`${GITHUB_API}/user`, { headers });
 
@@ -19,22 +18,19 @@ const getGitHubUserData = async (accessToken) => {
     // 3. Get followers
     const { data: followers } = await axios.get(`${GITHUB_API}/user/followers`, { headers });
 
-    // 4. Get organizations
-    const { data: orgs } = await axios.get(`${GITHUB_API}/user/orgs`, { headers });
+    // // 4. Get organizations
+    // const { data: orgs } = await axios.get(`${GITHUB_API}/user/orgs`, { headers });
 
-    // 5. Optional: Get starred repos
-    const { data: starred } = await axios.get(`${GITHUB_API}/user/starred`, { headers });
+    // // 5. Optional: Get starred repos
+    // const { data: starred } = await axios.get(`${GITHUB_API}/user/starred`, { headers });
 
-    // 6. Optional: Events (for activity)
-    const { data: events } = await axios.get(`${GITHUB_API}/users/${profile.login}/events`, { headers });
+    // // 6. Optional: Events (for activity)
+    // const { data: events } = await axios.get(`${GITHUB_API}/users/${profile.login}/events`, { headers });
 
     return {
       profile,
       repos,
       followers,
-      orgs,
-      starred,
-      events,
     };
   } catch (error) {
     console.error("GitHub API Error:", error?.response?.data || error.message);
@@ -44,13 +40,15 @@ const getGitHubUserData = async (accessToken) => {
 
 const GitHubUserDetails = async (req, res, next) => {
   try {
+    // console.log("GitHubUserDetails.js: req.user = ", req.user);	
     const { userId } = req.user;
-    const user = await User.findById().select("+githubAccessToken");
+    const user = await User.findById(userId).select("+githubAccessToken");
+    // console.log("GitHubUserDetails.js: user = ", user);
     if (!user && !user.githubAccessToken) {
       return next(new AppError(404, "Github account not Connected"));
     }
-    console.log("GitHubUserDetails.js: user = ", user);
     const data = await getGitHubUserData(user.githubAccessToken);
+    // console.log("GitHubUserDetails.js: data = ", data);
     res.status(200).json({ success: true, data });
   } catch (error) {
     next(new AppError(500, error.message));
